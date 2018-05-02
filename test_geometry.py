@@ -13,3 +13,6 @@ class TestPlaneIntersection(TestCase):
         vector_plane = (1, 1, 1)
         ortho_plane = (2, 2)
         intersection = plane_intersection(vector_plane, ortho_plane)
+        coeffs, const = intersection
+        self.assertEqual(coeffs, (1, 1))
+        self.assertEqual(const, -2)
