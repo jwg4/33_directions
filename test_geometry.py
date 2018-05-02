@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from geometry import planes, plane_intersection
+from geometry import planes, plane_intersection, transform
 
 
 class TestPlanes(TestCase):
@@ -16,3 +16,11 @@ class TestPlaneIntersection(TestCase):
         coeffs, const = intersection
         self.assertEqual(coeffs, (1, 1))
         self.assertEqual(const, -2)
+
+
+class TestTransform(TestCase):
+    def test_project_to_net(self):
+        plane_points = [(1, -1), (-1, 1)]
+        net_points = [(0, 1), (1, 2)]
+        line = (1, 1), -2
+        transformed_line = transform(plane_points, net_points, line)

@@ -17,3 +17,7 @@ def plane_intersection(vector, ortho):
     const = 0 - value * vector[dimension]
     coefficients = vector[:dimension] + vector[dimension+1:]
     return coefficients, const
+
+
+def transform(plane, net, line):
+    pass
