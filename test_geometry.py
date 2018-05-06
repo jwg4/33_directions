@@ -25,6 +25,7 @@ class TestTransform(TestCase):
         line = (1, 1), -2
         transformed_line = transform(plane_points, net_points, line)
         coeffs, const = transformed_line
-        self.assertEqual(const, 0)
-        self.assertEqual(coeffs, (-2, 2))
+        self.assertAlmostEqual(const, -2)
+        self.assertAlmostEqual(coeffs[0], 1)
+        self.assertAlmostEqual(coeffs[1], -1)
     
