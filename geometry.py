@@ -63,3 +63,47 @@ def transform(plane, net, line):
         c_ = (1, c_1 / c_0)
 
     return c_, k_
+
+
+def get_crossing(line, segment):
+    dimension, con, bounds = segment
+    c, k = line
+    if dimension == 1:
+        segment_ = 0, con, bounds
+        c_ = (c[1], c[0])
+        alternate = get_crossing((c_, k), segment_)
+        if alternate:
+            alternate = (alternate[1], alternate[0])
+        return alternate
+
+    if c[1] == 0:
+        cc = k / c[0]
+        if cc == con:
+            return (con, bounds[1])
+        else:
+            return None
+    
+    y = (k - c[0] * con) / c[1]
+    if y < bounds[0]:
+        return None
+    elif y > bounds[1]:
+        return None
+    else:
+        return (con, y)
+
+
+
+def line_intersecting_square(line, square):
+    x_points = [square[0][0], square[1][0]]
+    x_bounds = [min(x_points), max(x_points)]
+    y_points = [square[0][1], square[1][1]]
+    y_bounds = [min(y_points), max(y_points)]
+    segments = [
+        (0, square[0][0], y_bounds),
+        (0, square[1][0], y_bounds),
+        (1, square[0][1], x_bounds),
+        (1, square[1][1], x_bounds),
+    ]
+    crossing_points = [ get_crossing(line, segment) for segment in segments ]
+    return [ cp for cp in crossing_points if cp is not None ]
+

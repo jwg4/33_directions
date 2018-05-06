@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from geometry import planes, plane_intersection, transform
+from geometry import line_intersecting_square
 
 
 class TestPlanes(TestCase):
@@ -28,4 +29,11 @@ class TestTransform(TestCase):
         self.assertAlmostEqual(const, -2)
         self.assertAlmostEqual(coeffs[0], 1)
         self.assertAlmostEqual(coeffs[1], -1)
-    
+
+
+class TestLineIntersectSquare(TestCase):
+    def test_intersecting_line(self):
+        square = [(0, 0), (1, 1)]
+        line = (1, -2), 1-5
+        points = line_intersecting_square(line, square)
+        self.assertEqual(points, [(0, 0.75), (0.5, 1)])
