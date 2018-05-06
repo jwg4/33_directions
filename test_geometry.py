@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from geometry import planes, plane_intersection, transform
-from geometry import line_intersecting_square
+from geometry import line_intersecting_square, get_crossing
 
 
 class TestPlanes(TestCase):
@@ -34,6 +34,14 @@ class TestTransform(TestCase):
 class TestLineIntersectSquare(TestCase):
     def test_intersecting_line(self):
         square = [(0, 0), (1, 1)]
-        line = (1, -2), 1-5
+        line = (1, -2), 1.5
         points = line_intersecting_square(line, square)
         self.assertEqual(points, [(0, 0.75), (0.5, 1)])
+
+
+class TestGetCrossing(TestCase):
+    def test_crossing(self):
+        line = ((1, -2), 1.5)
+        segment = (0, 0, [0, 1])
+        crossing = get_crossing(line, segment)
+        self.assertEqual(crossing, (0, 0.75))
