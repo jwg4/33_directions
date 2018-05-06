@@ -38,6 +38,12 @@ class TestLineIntersectSquare(TestCase):
         points = line_intersecting_square(line, square)
         self.assertEqual(points, [(0, 0.75), (0.5, 1)])
 
+    def test_missing_line(self):
+        square = [(0, 0), (1, 1)]
+        line = (1, -2), 1.5
+        points = line_intersecting_square(line, square)
+        self.assertEqual(points, [])
+
 
 class TestGetCrossing(TestCase):
     def test_crossing(self):
