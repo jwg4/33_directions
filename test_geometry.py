@@ -45,3 +45,9 @@ class TestGetCrossing(TestCase):
         segment = (0, 0, [0, 1])
         crossing = get_crossing(line, segment)
         self.assertEqual(crossing, (0, 0.75))
+
+    def test_missing(self):
+        line = ((1, -2), -1.5)
+        segment = (0, 0, [1, 2])
+        crossing = get_crossing(line, segment)
+        self.assertIsNone(crossing)
