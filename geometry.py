@@ -30,6 +30,13 @@ def _angle(v):
 
 
 def transform(plane, net, line):
+    """ line is the equation of the line in the plane
+        in the form c . v = k
+        c_ and k_ are the corresponding constants
+        for the transformed equation
+        under the mapping which sends the points
+        in plane to the points in net.
+    """
     plane_d = (plane[1][0] - plane[0][0], plane[1][1] - plane[0][1])
     net_d = (net[1][0] - net[0][0], net[1][1] - net[0][1])
     plane_mag = _magnitude(plane_d)
