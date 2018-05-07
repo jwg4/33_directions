@@ -18,6 +18,12 @@ class TestPlaneIntersection(TestCase):
         coeffs, const = intersection
         self.assertEqual(coeffs, (1, 1))
         self.assertEqual(const, -2)
+    
+    def test_parallel(self):
+        vector_plane = (1, 0, 0)
+        ortho_plane = (0, 1)
+        intersection = plane_intersection(vector_plane, ortho_plane)
+        self.assertIsNone(intersection)
 
 
 class TestTransform(TestCase):

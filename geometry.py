@@ -27,6 +27,8 @@ def plane_intersection(vector, ortho):
     dimension, value = ortho
     const = 0 - value * vector[dimension]
     coefficients = vector[:dimension] + vector[dimension+1:]
+    if all(x == 0 for x in coefficients):
+        return None
     return coefficients, const
 
 
@@ -119,11 +121,12 @@ def line_intersecting_square(line, square):
 def _gen_plane_drawing(vector):
     for plane in planes:
         i = plane_intersection(vector, plane)
-        cube, net = FACE_MAPPINGS[plane]
-        l = transform(cube, net, i)
-        points = line_intersecting_square(l, net)
-        if points:
-            yield points
+        if i:
+            cube, net = FACE_MAPPINGS[plane]
+            l = transform(cube, net, i)
+            points = line_intersecting_square(l, net)
+            if points:
+                yield points
 
 
 def plane_drawing(vector):
