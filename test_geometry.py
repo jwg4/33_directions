@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from geometry import planes, plane_intersection, transform
 from geometry import line_intersecting_square, get_crossing
+from geometry import plane_drawing
 
 
 class TestPlanes(TestCase):
@@ -57,3 +58,10 @@ class TestGetCrossing(TestCase):
         segment = (0, 0, [1, 2])
         crossing = get_crossing(line, segment)
         self.assertIsNone(crossing)
+
+
+class TestPlaneDrawing(TestCase):
+    def test_basic_vector(self):
+        v = (1, 0, 0)
+        lines = plane_drawing(v)
+        self.assertEqual(len(lines), 4)

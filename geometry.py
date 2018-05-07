@@ -9,6 +9,15 @@ planes = [
     (2, -1),
 ]
 
+FACE_MAPPINGS = {
+    (0, 1): [[(-1, -1), (1, 1)], [(0, 0), (1, 1)]],
+    (0, -1): [[(1, -1), (-1, 1)], [(0, 2), (1, 3)]],
+    (1, 1): [[(1, -1), (-1, 1)], [(0, 1), (1, 2)]],
+    (1, -1): [[(-1, -1), (1, 1)], [(-1, 0), (0, 1)]],
+    (2, 1): [[(1, -1), (-1, 1)], [(1, 0), (2, 1)]],
+    (2, -1): [[(-1, -1), (1, 1)], [(0, -1), (1, 0)]],
+}
+
 
 def plane_intersection(vector, ortho):
     """
@@ -92,7 +101,6 @@ def get_crossing(line, segment):
         return (con, y)
 
 
-
 def line_intersecting_square(line, square):
     x_points = [square[0][0], square[1][0]]
     x_bounds = [min(x_points), max(x_points)]
@@ -107,3 +115,16 @@ def line_intersecting_square(line, square):
     crossing_points = [ get_crossing(line, segment) for segment in segments ]
     return [ cp for cp in crossing_points if cp is not None ]
 
+
+def _gen_plane_drawing(vector):
+    for plane in planes:
+        i = plane_intersection(vector, plane)
+        cube, net = FACE_MAPPINGS[plane]
+        l = transform(cube, net, i)
+        points = line_intersecting_square(l, net)
+        if points:
+            yield points
+
+
+def plane_drawing(vector):
+    return list(_gen_plane_drawing(vector))
