@@ -62,7 +62,6 @@ class TestLineIntersectSquare(TestCase):
         self.assertEqual(points, [])
 
     def test_edge(self):
-        #  [(0, 0.0), (1, 0.0), (1, 0)]
         square = [(0, 0), (1, 1)]
         line = ((0, 1), 0.0) 
         points = line_intersecting_square(line, square)
