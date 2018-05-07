@@ -62,24 +62,37 @@ class TestLineIntersectSquare(TestCase):
         self.assertEqual(points, [])
 
     def test_edge(self):
+        #  [(0, 0.0), (1, 0.0), (1, 0)]
         square = [(0, 0), (1, 1)]
-        line = (1, -2), 1.5
+        line = ((0, 1), 0.0) 
         points = line_intersecting_square(line, square)
-        self.assertEqual(points, [])
+        self.assertEqual(len(points), 2)
 
 
 class TestGetCrossing(TestCase):
     def test_crossing(self):
         line = ((1, -2), -1.5)
-        segment = (0, 0, [0, 1])
+        segment = (0, 0, [0, 1], True)
         crossing = get_crossing(line, segment)
         self.assertEqual(crossing, (0, 0.75))
 
     def test_missing(self):
         line = ((1, -2), -1.5)
-        segment = (0, 0, [1, 2])
+        segment = (0, 0, [1, 2], False)
         crossing = get_crossing(line, segment)
         self.assertIsNone(crossing)
+
+    def test_corner_to_ignore(self):
+        line = ((1, 1), 1)
+        segment = (0, 0, [0, 1], True)
+        crossing = get_crossing(line, segment)
+        self.assertIsNone(crossing)
+
+    def test_corner_to_not_ignore(self):
+        line = ((1, 1), 1)
+        segment = (0, 0, [0, 1], False)
+        crossing = get_crossing(line, segment)
+        self.assertEqual(crossing, (0, 1))
 
 
 class TestPlaneDrawing(TestCase):
@@ -92,4 +105,5 @@ class TestPlaneDrawing(TestCase):
         v = (1, 0, 1)
         lines = plane_drawing(v)
         self.assertEqual(len(lines), 6)
-    
+        for line in lines:
+            self.assertEqual(len(line), 2)

@@ -80,10 +80,10 @@ def transform(plane, net, line):
 
 
 def get_crossing(line, segment):
-    dimension, con, bounds = segment
+    dimension, con, bounds, choose_lower = segment
     c, k = line
     if dimension == 1:
-        segment_ = 0, con, bounds
+        segment_ = 0, con, bounds, choose_lower
         c_ = (c[1], c[0])
         alternate = get_crossing((c_, k), segment_)
         if alternate:
@@ -102,6 +102,10 @@ def get_crossing(line, segment):
         return None
     elif y > bounds[1]:
         return None
+    elif choose_lower and y == bounds[1]:
+        return None
+    elif not choose_lower and y == bounds[0]:
+        return None
     else:
         return (con, y)
 
@@ -112,10 +116,10 @@ def line_intersecting_square(line, square):
     y_points = [square[0][1], square[1][1]]
     y_bounds = [min(y_points), max(y_points)]
     segments = [
-        (0, square[0][0], y_bounds),
-        (0, square[1][0], y_bounds),
-        (1, square[0][1], x_bounds),
-        (1, square[1][1], x_bounds),
+        (0, square[0][0], y_bounds, True),
+        (0, square[1][0], y_bounds, False),
+        (1, square[0][1], x_bounds, False),
+        (1, square[1][1], x_bounds, True),
     ]
     crossing_points = [ get_crossing(line, segment) for segment in segments ]
     return [ cp for cp in crossing_points if cp is not None ]
@@ -124,13 +128,10 @@ def line_intersecting_square(line, square):
 def _gen_plane_drawing(vector):
     for plane in planes:
         i = plane_intersection(vector, plane)
-        print(plane, i)
         if i:
             cube, net = FACE_MAPPINGS[plane]
             l = transform(cube, net, i)
-            print(cube, net, i, l)
             points = line_intersecting_square(l, net)
-            print(points)
             if points:
                 yield points
 
