@@ -69,9 +69,12 @@ def transform(plane, net, line):
     c_1 = c[0] * m[0][1] + c[1] * m[1][1] 
     c_ = (c_0, c_1)
 
-    if c_0 != 0:
+    if abs(c_0) > 0.00001:
         k_ = k_ / c_0
         c_ = (1, c_1 / c_0)
+    else:
+        k_ = k_ / c_1
+        c_ = (0, 1)
 
     return c_, k_
 
@@ -121,10 +124,13 @@ def line_intersecting_square(line, square):
 def _gen_plane_drawing(vector):
     for plane in planes:
         i = plane_intersection(vector, plane)
+        print(plane, i)
         if i:
             cube, net = FACE_MAPPINGS[plane]
             l = transform(cube, net, i)
+            print(cube, net, i, l)
             points = line_intersecting_square(l, net)
+            print(points)
             if points:
                 yield points
 

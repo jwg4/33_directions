@@ -37,6 +37,16 @@ class TestTransform(TestCase):
         self.assertAlmostEqual(coeffs[0], 1)
         self.assertAlmostEqual(coeffs[1], -1)
 
+    def test_square_edge(self):
+        plane_points = [(1, -1), (-1, 1)]
+        net_points = [(1, 0), (2, 1)]
+        line = (1, 0), -1
+        transformed_line = transform(plane_points, net_points, line)
+        coeffs, const = transformed_line
+        self.assertAlmostEqual(const, 1)
+        self.assertAlmostEqual(coeffs[0], 0)
+        self.assertAlmostEqual(coeffs[1], 1)
+
 
 class TestLineIntersectSquare(TestCase):
     def test_intersecting_line(self):
@@ -46,6 +56,12 @@ class TestLineIntersectSquare(TestCase):
         self.assertEqual(points, [(0, 0.75), (0.5, 1)])
 
     def test_missing_line(self):
+        square = [(0, 0), (1, 1)]
+        line = (1, -2), 1.5
+        points = line_intersecting_square(line, square)
+        self.assertEqual(points, [])
+
+    def test_edge(self):
         square = [(0, 0), (1, 1)]
         line = (1, -2), 1.5
         points = line_intersecting_square(line, square)
@@ -71,3 +87,9 @@ class TestPlaneDrawing(TestCase):
         v = (1, 0, 0)
         lines = plane_drawing(v)
         self.assertEqual(len(lines), 4)
+    
+    def test_plane_crossing_corners(self):
+        v = (1, 0, 1)
+        lines = plane_drawing(v)
+        self.assertEqual(len(lines), 6)
+    
