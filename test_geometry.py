@@ -47,6 +47,13 @@ class TestTransform(TestCase):
         self.assertAlmostEqual(coeffs[0], 0)
         self.assertAlmostEqual(coeffs[1], 1)
 
+    def test_x_equals_zero(self):
+        i = ((1, 0), 0)
+        cube = [(1, -1), (-1, 1)]
+        net = [(1, 0), (2, 1)]
+        l = transform(cube, net, i, True)
+        self.assertEqual(l, ((1, 0), 1.5))
+
 
 class TestLineIntersectSquare(TestCase):
     def test_intersecting_line(self):
