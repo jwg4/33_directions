@@ -60,13 +60,13 @@ class TestLineIntersectSquare(TestCase):
         square = [(0, 0), (1, 1)]
         line = (1, -2), -1.5
         points = line_intersecting_square(line, square)
-        self.assertEqual(points, [(0, 0.75), (0.5, 1)])
+        self.assertEqual(points, ((0, 0.75), (0.5, 1)))
 
     def test_missing_line(self):
         square = [(0, 0), (1, 1)]
         line = (1, -2), 1.5
         points = line_intersecting_square(line, square)
-        self.assertEqual(points, [])
+        self.assertEqual(points, ())
 
     def test_edge(self):
         square = [(0, 0), (1, 1)]

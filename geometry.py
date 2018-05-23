@@ -129,7 +129,7 @@ def line_intersecting_square(line, square):
         (1, square[1][1], x_bounds, True),
     ]
     crossing_points = [ get_crossing(line, segment) for segment in segments ]
-    return [ cp for cp in crossing_points if cp is not None ]
+    return tuple( cp for cp in crossing_points if cp is not None )
 
 
 def _gen_plane_drawing(vector):
