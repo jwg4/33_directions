@@ -106,6 +106,20 @@ class TestPlaneDrawing(TestCase):
         v = (1, 0, 0)
         lines = plane_drawing(v)
         self.assertEqual(len(lines), 4)
+        lines = set(lines)
+        self.assertIn(((1.5, 0.0), (1.5, 1.0)), lines)
+
+    def test_plane_drawing_steps(self):
+        vector = (1, 0, 0)
+        plane = (1, 1)
+        i = plane_intersection(vector, plane)
+        self.assertEqual(i, ((1, 0), 0))
+        cube = [(1, -1), (-1, 1)]
+        net = [(1, 0), (2, 1)]
+        l = transform(cube, net, i, True)
+        self.assertEqual(l, ((1, 0), 1.5))
+        points = line_intersecting_square(l, net)
+        self.assertEqual(points, ((1.5, 0.0), (1.5, 1.0)))
     
     def test_plane_crossing_corners(self):
         v = (1, 0, 1)

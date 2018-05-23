@@ -10,12 +10,12 @@ planes = [
 ]
 
 FACE_MAPPINGS = {
-    (0, 1): [[(-1, -1), (1, 1)], [(0, 0), (1, 1)]],
-    (0, -1): [[(1, -1), (-1, 1)], [(0, 2), (1, 3)]],
-    (1, 1): [[(1, -1), (-1, 1)], [(0, 1), (1, 2)]],
-    (1, -1): [[(-1, -1), (1, 1)], [(-1, 0), (0, 1)]],
-    (2, 1): [[(1, -1), (-1, 1)], [(1, 0), (2, 1)]],
-    (2, -1): [[(-1, -1), (1, 1)], [(0, -1), (1, 0)]],
+    (0, 1): [[(-1, -1), (1, 1)], [(0, 0), (1, 1)], False],
+    (0, -1): [[(1, -1), (-1, 1)], [(0, 2), (1, 3)], False],
+    (1, 1): [[(1, -1), (-1, 1)], [(1, 0), (2, 1)], True],
+    (1, -1): [[(-1, -1), (1, 1)], [(-1, 0), (0, 1)], False],
+    (2, 1): [[(1, -1), (-1, 1)], [(0, 1), (1, 2)], False],
+    (2, -1): [[(-1, -1), (1, 1)], [(0, -1), (1, 0)], False],
 }
 
 
@@ -136,8 +136,8 @@ def _gen_plane_drawing(vector):
     for plane in planes:
         i = plane_intersection(vector, plane)
         if i:
-            cube, net = FACE_MAPPINGS[plane]
-            l = transform(cube, net, i)
+            cube, net, is_flip = FACE_MAPPINGS[plane]
+            l = transform(cube, net, i, is_flip)
             points = line_intersecting_square(l, net)
             if points:
                 yield points
