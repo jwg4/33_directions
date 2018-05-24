@@ -40,15 +40,7 @@ def _angle(v):
     return math.atan2(v[1], v[0])
 
 
-def transform(plane, net, line, flip=False):
-    """ line is the equation of the line in the plane
-        in the form c . v = k
-        c_ and k_ are the corresponding constants
-        for the transformed equation
-        under the mapping which sends the points
-        in plane to the points in net.
-    """
-
+def transform_matrix(plane, net, flip):
     if flip:
         plane_d = (plane[0][0] - plane[1][0], plane[1][1] - plane[0][1])
     else:
@@ -61,12 +53,24 @@ def transform(plane, net, line, flip=False):
     plane_angle = _angle(plane_d)
     net_angle = _angle(net_d)
     th = plane_angle - net_angle
-    m = [(l * math.cos(th), - l * math.sin(th)), (l * math.sin(th), l * math.cos(th))]
-
     if flip:
-        a0 = plane[1][0] - (m[0][0] * net[0][0] + m[0][1] * net[0][1]) 
+        m = [(- l * math.cos(th), l * math.sin(th)), (l * math.sin(th), l * math.cos(th))]
     else:
-        a0 = plane[0][0] - (m[0][0] * net[0][0] + m[0][1] * net[0][1]) 
+        m = [(l * math.cos(th), - l * math.sin(th)), (l * math.sin(th), l * math.cos(th))]
+
+    return m
+
+def transform(plane, net, line, flip=False):
+    """ line is the equation of the line in the plane
+        in the form c . v = k
+        c_ and k_ are the corresponding constants
+        for the transformed equation
+        under the mapping which sends the points
+        in plane to the points in net.
+    """
+    m = transform_matrix(plane, net, flip)
+
+    a0 = plane[0][0] - (m[0][0] * net[0][0] + m[0][1] * net[0][1]) 
     a1 = plane[0][1] - (m[1][0] * net[0][0] + m[1][1] * net[0][1])
     a = (a0, a1)
 

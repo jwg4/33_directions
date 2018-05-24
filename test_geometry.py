@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from geometry import planes, plane_intersection, transform
 from geometry import line_intersecting_square, get_crossing
-from geometry import plane_drawing
+from geometry import plane_drawing, transform_matrix
 
 
 class TestPlanes(TestCase):
@@ -53,6 +53,21 @@ class TestTransform(TestCase):
         net = [(1, 0), (2, 1)]
         l = transform(cube, net, i, True)
         self.assertEqual(l, ((1, 0), 1.5))
+
+    def test_diagonal_for_flipped_squares(self):
+        i = ((1, 1), 0)
+        cube = [(1, -1), (-1, 1)]
+        net = [(1, 0), (2, 1)]
+        l = transform(cube, net, i, True)
+        self.assertEqual(l, ((1, -1), 1.0))
+
+
+class TestTransformMatrix(TestCase):
+    def test_matrix_for_flipped_squares(self):
+        cube = [(1, -1), (-1, 1)]
+        net = [(1, 0), (2, 1)]
+        m = transform_matrix(cube, net, True)
+        self.assertEqual(m, [(-2, 0), (0, 2)])
 
 
 class TestLineIntersectSquare(TestCase):
@@ -127,3 +142,17 @@ class TestPlaneDrawing(TestCase):
         self.assertEqual(len(lines), 6)
         for line in lines:
             self.assertEqual(len(line), 2)
+        lines = set(lines)
+        self.assertIn(((1.0, 0.0), (2.0, 1.0)), lines)
+
+    def test_diagonal_plane_drawing_steps(self):
+        vector = (1, 0, 1)
+        plane = (1, 1)
+        i = plane_intersection(vector, plane)
+        self.assertEqual(i, ((1, 1), 0))
+        cube = [(1, -1), (-1, 1)]
+        net = [(1, 0), (2, 1)]
+        l = transform(cube, net, i, True)
+        self.assertEqual(l, ((1, -1), 1.0))
+        points = line_intersecting_square(l, net)
+        self.assertEqual(points, ((1.0, 0.0), (2.0, 1.0)))
