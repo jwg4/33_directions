@@ -89,6 +89,13 @@ class TestLineIntersectSquare(TestCase):
         points = line_intersecting_square(line, square)
         self.assertEqual(len(points), 2)
 
+    def test_another_edge(self):
+        net = [(0, 1), (1, 2)]
+        line = ((0, 1), 2.0) 
+        points = line_intersecting_square(line, net)
+        self.assertEqual(len(points), 2)
+        self.assertEqual(points, ((1, 2), (0, 2)))
+
 
 class TestGetCrossing(TestCase):
     def test_crossing(self):
