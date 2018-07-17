@@ -91,6 +91,7 @@ def transform(plane, net, line, flip=False):
 
 
 def get_crossing(line, segment):
+    DELTA = 0.0000001
     dimension, con, bounds, choose_lower = segment
     c, k = line
     if dimension == 1:
@@ -112,13 +113,13 @@ def get_crossing(line, segment):
             return None
     
     y = (k - c[0] * con) / c[1]
-    if y < bounds[0]:
+    if y < bounds[0] - DELTA:
         return None
-    elif y > bounds[1]:
+    elif y > bounds[1] + DELTA:
         return None
-    elif choose_lower and y == bounds[1]:
+    elif choose_lower and y > bounds[1] - DELTA:
         return None
-    elif not choose_lower and y == bounds[0]:
+    elif not choose_lower and y < bounds[0] + DELTA:
         return None
     else:
         return (con, y)
