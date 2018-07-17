@@ -124,6 +124,13 @@ class TestGetCrossing(TestCase):
 
 
 class TestPlaneDrawing(TestCase):
+    def is_almost_equal(self, x, y):
+        self.assertEqual(x.__class__, y.__class__)
+        if isinstance(x, list) or isinstance(x, tuple):
+            return all(self.is_almost_equal(*t) for t in zip(x, y))
+        return self.assertAlmostEqual(x, y)
+                
+    
     def test_basic_vector(self):
         v = (1, 0, 0)
         lines = plane_drawing(v)
@@ -161,7 +168,7 @@ class TestPlaneDrawing(TestCase):
         cube = [(1, -1), (-1, 1)]
         net = [(1, 0), (2, 1)]
         l = transform(cube, net, i, False)
-        self.assertEqual(l, ((1, -1), 1.0))
+        self.is_almost_equal(l, ((1, -1), 1.0))
         points = line_intersecting_square(l, net)
         self.assertEqual(points, ((1.0, 0.0), (2.0, 1.0)))
 
