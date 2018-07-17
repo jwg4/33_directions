@@ -96,6 +96,12 @@ class TestLineIntersectSquare(TestCase):
         self.assertEqual(len(points), 2)
         self.assertEqual(points, ((1, 2), (0, 2)))
 
+    def test_diagonal(self):
+        net = [(1, 0), (2, 1)]
+        l = ((1, -1), 1.0)
+        points = line_intersecting_square(l, net)
+        self.assertEqual(points, ((1.0, 0.0), (2.0, 1.0)))
+
 
 class TestGetCrossing(TestCase):
     def test_crossing(self):
@@ -170,7 +176,7 @@ class TestPlaneDrawing(TestCase):
         l = transform(cube, net, i, False)
         self.is_almost_equal(l, ((1, -1), 1.0))
         points = line_intersecting_square(l, net)
-        self.assertEqual(points, ((1.0, 0.0), (2.0, 1.0)))
+        self.is_almost_equal(points, ((1, 0.0), (2, 1.0)))
 
     def test_diagonal_plane_drawing_steps_second_face(self):
         vector = (1, 0, 1)
