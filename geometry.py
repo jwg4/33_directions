@@ -104,7 +104,10 @@ def get_crossing(line, segment):
     if c[1] == 0:
         cc = k / c[0]
         if cc == con:
-            return (con, bounds[1])
+            if choose_lower:
+                return (con, bounds[0])
+            else:
+                return (con, bounds[1])
         else:
             return None
     
