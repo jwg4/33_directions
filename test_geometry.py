@@ -151,7 +151,7 @@ class TestPlaneDrawing(TestCase):
             self.assertEqual(len(line), 2)
         lines = set(lines)
         self.assertIn(((1.0, 0.0), (2.0, 1.0)), lines)
-        self.assertIn(((0.0, 2.0), (1.0, 2.0)), lines)
+        self.assertIn(((1.0, 2.0), (0.0, 2.0)), lines)
 
     def test_diagonal_plane_drawing_steps(self):
         vector = (1, 0, 1)
@@ -175,4 +175,4 @@ class TestPlaneDrawing(TestCase):
         l = transform(cube, net, i, False)
         self.assertEqual(l, ((0, 1), 2.0))
         points = line_intersecting_square(l, net)
-        self.assertEqual(points, ((0.0, 2.0), (1.0, 2.0)))
+        self.assertEqual(points, ((1.0, 2.0), (0.0, 2.0)))
