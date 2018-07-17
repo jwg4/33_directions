@@ -147,7 +147,7 @@ def _gen_plane_drawing(vector):
             cube, net, is_flip = FACE_MAPPINGS[plane]
             l = transform(cube, net, i, is_flip)
             points = line_intersecting_square(l, net)
-            if points:
+            if points and len(points) > 1:
                 yield points
 
 
