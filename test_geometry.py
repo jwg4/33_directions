@@ -153,7 +153,7 @@ class TestPlaneDrawing(TestCase):
         self.assertEqual(i, ((1, 1), 0))
         cube = [(1, -1), (-1, 1)]
         net = [(1, 0), (2, 1)]
-        l = transform(cube, net, i, True)
+        l = transform(cube, net, i, False)
         self.assertEqual(l, ((1, -1), 1.0))
         points = line_intersecting_square(l, net)
         self.assertEqual(points, ((1.0, 0.0), (2.0, 1.0)))
@@ -165,7 +165,7 @@ class TestPlaneDrawing(TestCase):
         self.assertEqual(i, ((1, 0), -1))
         cube = [(1, -1), (-1, 1)]
         net = [(0, 1), (1, 2)]
-        l = transform(cube, net, i, True)
+        l = transform(cube, net, i, False)
         self.assertEqual(l, ((0, 1), 2.0))
         points = line_intersecting_square(l, net)
         self.assertEqual(points, ((0.0, 2.0), (1.0, 2.0)))
