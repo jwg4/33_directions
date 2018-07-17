@@ -144,6 +144,7 @@ class TestPlaneDrawing(TestCase):
             self.assertEqual(len(line), 2)
         lines = set(lines)
         self.assertIn(((1.0, 0.0), (2.0, 1.0)), lines)
+        self.assertIn(((0.0, 2.0), (1.0, 2.0)), lines)
 
     def test_diagonal_plane_drawing_steps(self):
         vector = (1, 0, 1)
