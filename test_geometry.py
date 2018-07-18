@@ -222,3 +222,10 @@ class TestAntipodes(TestSimilarPoints):
         points = list(antipodes(p))
         self.assertEqual(2, len(points))
         self.is_almost_equal([(0.5, 0.5), (0.5, 2.5)], points)
+
+    def test_center_of_edge(self):
+        p = (1, 0, 1)
+        points = list(antipodes(p))
+        self.assertEqual(4, len(points))
+        expected = [(0.5, 1), (0.5, 3), (0.5, 1), (0.5, -1)]
+        self.is_almost_equal(expected, points)
