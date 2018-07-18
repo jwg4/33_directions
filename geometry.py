@@ -19,6 +19,16 @@ FACE_MAPPINGS = {
 }
 
 
+def point_in_plane(vector, plane):
+    dimension, value = plane
+    if vector[dimension] == value:
+        return "Foo"
+    elif vector[dimension] == 0 - value:
+        return "Foo"
+    else:
+        return None
+
+
 def plane_intersection(vector, ortho):
     """
         x_dimension = value
@@ -153,3 +163,10 @@ def _gen_plane_drawing(vector):
 
 def plane_drawing(vector):
     return list(_gen_plane_drawing(vector))
+
+
+def antipodes(point):
+    for plane in planes:
+        cube_p = point_in_plane(point, plane)
+        if cube_p:
+            yield "Foo"    

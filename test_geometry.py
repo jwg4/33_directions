@@ -3,6 +3,7 @@ from unittest import TestCase
 from geometry import planes, plane_intersection, transform
 from geometry import line_intersecting_square, get_crossing
 from geometry import plane_drawing, transform_matrix
+from geometry import antipodes
 
 
 class TestPlanes(TestCase):
@@ -201,3 +202,10 @@ class TestPlaneDrawing(TestCase):
         self.assertEqual(l, ((0, 1), 2.0))
         points = line_intersecting_square(l, net)
         self.assertEqual(points, ((1.0, 2.0), (0.0, 2.0)))
+
+
+class TestAntipodes(TestCase):
+    def test_center_of_face(self):
+        p = (1, 0, 0)
+        points = list(antipodes(p))
+        self.assertEqual(2, len(points))
