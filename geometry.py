@@ -22,9 +22,10 @@ FACE_MAPPINGS = {
 def point_in_plane(vector, plane):
     dimension, value = plane
     if vector[dimension] == value:
-        return "Foo"
+        return vector[:dimension] + vector[dimension+1:]
     elif vector[dimension] == 0 - value:
-        return "Foo"
+        p = vector[:dimension] + vector[dimension+1:]
+        return tuple(0 - r for r in p)
     else:
         return None
 
@@ -169,4 +170,12 @@ def antipodes(point):
     for plane in planes:
         cube_p = point_in_plane(point, plane)
         if cube_p:
-            yield "Foo"    
+            cube_sq, net_sq, flip = FACE_MAPPINGS[plane]
+            m = transform_matrix(net_sq, cube_sq, flip)
+
+            a_0 = net_sq[0][0] - (m[0][0] * cube_sq[0][0] + m[0][1] * cube_sq[0][1]) 
+            a_1 = net_sq[0][1] - (m[1][0] * cube_sq[0][0] + m[1][1] * cube_sq[0][1])
+
+            c_0 = cube_p[0] * m[0][0] + cube_p[1] * m[1][0] 
+            c_1 = cube_p[0] * m[0][1] + cube_p[1] * m[1][1] 
+            yield (c_0 + a_0, c_1 + a_1)
