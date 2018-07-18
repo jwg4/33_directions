@@ -16,6 +16,7 @@ def drawing_code(points):
             yield c
         for point in antipodes(p):
             c = draw_point(point, color=color)
+            print(p, point, c)
             yield c
 
 
