@@ -205,8 +205,9 @@ class TestPlaneDrawing(TestSimilarPoints):
         self.assertEqual(points, ((1.0, 2.0), (0.0, 2.0)))
 
 
-class TestAntipodes(TestCase):
+class TestAntipodes(TestSimilarPoints):
     def test_center_of_face(self):
         p = (1, 0, 0)
         points = list(antipodes(p))
         self.assertEqual(2, len(points))
+        self.is_almost_equal([(0.5, 0.5), (0.5, 2.5)], points)
