@@ -132,10 +132,21 @@ class TestGetCrossing(TestCase):
 
 class TestSimilarPoints(TestCase):
     def is_almost_equal(self, x, y):
-        self.assertEqual(x.__class__, y.__class__)
+        self.assertTrue(self.almost_equal(x, y), "%s is not equal to %s" % (str(x), str(y)))
+
+    def almost_equal(self, x, y):
+        if x.__class__ != y.__class__:
+            try:
+                return self.almost_equal(float(x), float(y))
+            except:
+                return False
         if isinstance(x, list) or isinstance(x, tuple):
-            return all(self.is_almost_equal(*t) for t in zip(x, y))
-        return self.assertAlmostEqual(x, y)
+            return all(self.almost_equal(*t) for t in zip(x, y))
+        try:
+            self.assertAlmostEqual(x, y)
+            return True
+        except:
+            return False
                 
     
 class TestPlaneDrawing(TestSimilarPoints):
