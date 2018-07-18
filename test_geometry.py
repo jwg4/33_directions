@@ -130,7 +130,7 @@ class TestGetCrossing(TestCase):
         self.assertEqual(crossing, (0, 1))
 
 
-class TestPlaneDrawing(TestCase):
+class TestSimilarPoints(TestCase):
     def is_almost_equal(self, x, y):
         self.assertEqual(x.__class__, y.__class__)
         if isinstance(x, list) or isinstance(x, tuple):
@@ -138,6 +138,7 @@ class TestPlaneDrawing(TestCase):
         return self.assertAlmostEqual(x, y)
                 
     
+class TestPlaneDrawing(TestSimilarPoints):
     def test_basic_vector(self):
         v = (1, 0, 0)
         lines = plane_drawing(v)
