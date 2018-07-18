@@ -1,6 +1,6 @@
 import unittest
 
-from drawing import draw_line
+from drawing import draw_line, draw_point
 
 
 class TestDrawLine(unittest.TestCase):
@@ -14,3 +14,11 @@ class TestDrawLine(unittest.TestCase):
         line = [(0, 1), (1, 0.5)]
         draw_code = draw_line(*line, color="red")
         self.assertEqual(draw_code, "    \draw[red] (0.00,1.00) -- (1.00,0.50);")
+
+
+class TestDrawPoint(unittest.TestCase):
+    def test_basic_point(self):
+        p = (0.5, 2.5)
+        draw_code = draw_point(p, "green")
+        expected = "    \draw[green] (0.50,2.50) circle (1pt);"
+        self.assertEqual(expected, draw_code)
