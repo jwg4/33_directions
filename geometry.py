@@ -176,6 +176,7 @@ def antipodes(point):
             a_0 = net_sq[0][0] - (m[0][0] * cube_sq[0][0] + m[0][1] * cube_sq[0][1]) 
             a_1 = net_sq[0][1] - (m[1][0] * cube_sq[0][0] + m[1][1] * cube_sq[0][1])
 
-            c_0 = cube_p[0] * m[0][0] + cube_p[1] * m[1][0] 
-            c_1 = cube_p[0] * m[0][1] + cube_p[1] * m[1][1] 
-            yield (c_0 + a_0, c_1 + a_1)
+            c_0 = cube_p[0] * m[0][0] + cube_p[1] * m[0][1] 
+            c_1 = cube_p[0] * m[1][0] + cube_p[1] * m[1][1] 
+            net_p = (c_0 + a_0, c_1 + a_1)
+            yield net_p
