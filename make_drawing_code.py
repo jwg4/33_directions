@@ -13,19 +13,47 @@ POINTS = [
 ]
 
 COLORS = [
-    "green",
-    "blue",
-    "red",
-    "brown",
+    #"green",
+    #"blue",
+    #"red",
+    #"brown",
+    #"black!60!green",
+    #"black!60!green!40!blue",
+    "red!50!yellow!99!blue",
+    "yellow!99!blue!50!red",
+    "yellow!99!red!50!blue",
 ]
 
+Y = 1.0 / math.sqrt(2.0)
 
-def get_color():
-    return random.choice(COLORS)
+RATIOS = {
+    -Y: 15,
+    -1: 30,
+    0: 50,
+    1: 70,
+    Y: 85
+}
+
+def get_color(point):
+    r0 = RATIOS[point[0]]
+    r1 = RATIOS[point[1]]
+    r2 = RATIOS[point[2]]
+    if point[0] == point[1]:
+        return "red!%d!blue!%d!white" % (r0, r2) 
+    if point[0] == -point[1]:
+        return "red!%d!blue!%d!black" % (r0, r2) 
+    if point[1] == point[2]:
+        return "red!%d!yellow!%d!white" % (r0, r2) 
+    if point[1] == -point[2]:
+        return "red!%d!yellow!%d!black" % (r0, r2) 
+    if point[0] == point[2]:
+        return "blue!%d!yellow!%d!white" % (r0, r1) 
+    if point[0] == -point[2]:
+        return "blue!%d!yellow!%d!black" % (r0, r1) 
+    return "red!%d!white!%d!yellow!%d!blue" % (r0, r1, r2)
 
 
 def generate_points():
-    y = 1.0 / math.sqrt(2.0)
     for i in range(0, 3):
         yield tuple([0] * i + [1] + [0] * (2 - i))
         for j in range(0, 3):
@@ -36,26 +64,26 @@ def generate_points():
                 yield tuple(l)
                 l[j] = -1
                 yield tuple(l)
-                l[j] = y
+                l[j] = Y
                 yield tuple(l)
-                l[j] = -y
+                l[j] = -Y
                 yield tuple(l)
-                l = [y, y, y]
+                l = [Y, Y, Y]
                 l[i] = 1
                 yield tuple(l)
                 l[i] = -1
                 yield tuple(l)
                 l[i] = 1
-                l[j] = -y
+                l[j] = -Y
                 yield tuple(l)
                 l[i] = -1
-                l[j] = -y
+                l[j] = -Y
                 yield tuple(l)
 
 
 def color_points():
     for p in generate_points():
-        yield (p, get_color())
+        yield (p, get_color(p))
 
 
 def drawing_code(points):
