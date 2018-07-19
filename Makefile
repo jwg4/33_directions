@@ -3,7 +3,7 @@ all: cube.pdf
 cube.pdf: cube.tex planes.tex
 	pdflatex cube.tex
 
-PY_MODULES = geometry.py drawing.py
+PY_MODULES = geometry.py drawing.py color.py points.py
 
 planes.tex: make_drawing_code.py $(PY_MODULES)
 	python make_drawing_code.py
