@@ -9,6 +9,29 @@ COLORS = [
 ]
 
 
+FULL_COLORS = [
+    "black",
+    "blue",
+    "brown",
+    "cyan",
+    "darkgray",
+    "gray",
+    "green",
+    "lightgray",
+    "lime",
+    "magenta",
+    "olive",
+    "orange",
+    "pink",
+    "purple",
+    "red",
+    "teal",
+    "violet",
+    "white",
+    "yellow",
+]
+
+
 def generate_colors():
     n = len(COLORS)
     for i in range(0, n):
@@ -20,7 +43,8 @@ def generate_colors():
             for d in [25, 50, 75]:
                 yield "%s!%d!%s" % (COLORS[i], d, b)
 
-COLOR_LIST = list(generate_colors())
+
+COLOR_LIST = list(FULL_COLORS + FULL_COLORS)
 random.shuffle(COLOR_LIST)
                 
 
