@@ -17,20 +17,16 @@ def generate_points():
             l[i] = 1
             l[j] = -1
             yield tuple(l)
-            l = [Y, Y, Y]
-            l[i] = 1
-            l[j] = -Y
-            yield tuple(l)
-            l = [Y, Y, Y]
-            l[i] = -1
-            l[j] = -Y
-            yield tuple(l)
         for j in range(0, 3):
             if j != i:
                 l = [0, 0, 0]
                 l[i] = 1
                 l[j] = Y
                 yield tuple(l)
+                l[j] = -Y
+                yield tuple(l)
+                l = [Y, Y, Y]
+                l[i] = 1
                 l[j] = -Y
                 yield tuple(l)
 
