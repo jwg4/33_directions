@@ -1,5 +1,9 @@
 all: cube.pdf cube_s.pdf
 
+clean:
+	rm *.pdf
+	rm planes.tex sparse.tex
+
 cube.pdf: cube.tex planes.tex
 	pdflatex cube.tex
 
