@@ -27,7 +27,6 @@ FULL_COLORS = [
     "red",
     "teal",
     "violet",
-    "white",
     "yellow",
 ]
 
